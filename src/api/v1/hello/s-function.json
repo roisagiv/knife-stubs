@@ -1,0 +1,71 @@
+{
+    "name": "api_v1_hello",
+    "runtime": "nodejs4.3",
+    "description": "Serverless Lambda function for project: knife-stubs",
+    "customName": false,
+    "customRole": false,
+    "handler": "v1/hello/handler.handler",
+    "timeout": 6,
+    "memorySize": 1024,
+    "authorizer": {},
+    "custom": {
+        "excludePatterns": [],
+        "optimize": {
+            "exclude": [
+                "aws-sdk"
+            ],
+            "transforms": [{
+                "name": "babelify",
+                "opts": {
+                    "presets": [
+                        "es2015"
+                    ],
+                    "plugins": [
+                        "syntax-async-functions",
+                        "transform-regenerator",
+                        "transform-runtime"
+                    ]
+                }
+            }]
+        }
+    },
+    "endpoints": [{
+        "path": "api/v1/hello",
+        "method": "GET",
+        "type": "AWS",
+        "authorizationType": "none",
+        "authorizerFunction": false,
+        "apiKeyRequired": false,
+        "requestParameters": {},
+        "requestTemplates": {
+            "application/json": {
+                "name": "$input.params('name')"
+            }
+        },
+        "responses": {
+            "400": {
+                "statusCode": "400"
+            },
+            "default": {
+                "statusCode": "200",
+                "responseParameters": {},
+                "responseModels": {
+                    "application/json;charset=UTF-8": "Empty"
+                },
+                "responseTemplates": {
+                    "application/json;charset=UTF-8": ""
+                }
+            }
+        }
+    }],
+    "events": [],
+    "environment": {
+        "SERVERLESS_PROJECT": "${project}",
+        "SERVERLESS_STAGE": "${stage}",
+        "SERVERLESS_REGION": "${region}"
+    },
+    "vpc": {
+        "securityGroupIds": [],
+        "subnetIds": []
+    }
+}

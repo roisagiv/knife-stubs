@@ -1,0 +1,26 @@
+version: '2'
+services:
+
+  lambda:
+    image: mhart/alpine-node:4
+    volumes:
+    - ./:/usr/src/app
+    working_dir: /usr/src/app
+    ports:
+      - "3000:3000"
+    command:
+      /bin/sh -c "npm run start"
+    env_file: env.docker
+
+  lambda-test:
+    image: mhart/alpine-node:4
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
+    command:
+      /bin/sh -c "npm run test:watch"
+    depends_on:
+      - lambda
+    env_file: env.docker
